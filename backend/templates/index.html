@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컴퓨터 네트워크 패킷 분석</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📡 컴퓨터 네트워크 패킷 분석 프로젝트</h1>
+            <p>이 페이지는 HTTP 및 DNS 패킷 캡처를 위해 제작되었습니다.</p>
+        </header>
+
+        <div class="card">
+            <h2>1. HTTP 200 (OK) - TCP</h2>
+            <p>
+                현재 이 페이지에 접속할 때, 브라우저는 서버에 <strong>HTTP GET</strong> 요청을 보냈습니다.<br>
+                서버는 요청에 성공했다는 의미로 <strong>HTTP 200 (OK)</strong> 상태 코드와 함께 이 HTML 문서를 응답했습니다.
+            </p>
+            <p>
+                Wireshark에서 <code>tcp.port == 80</code> (서버 포트) 필터로 3-way handshake와 이 응답 패킷을 확인하세요.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>2. HTTP 301 (Redirect) - TCP</h2>
+            <p>
+                아래 버튼을 클릭하면 서버는 <strong><code>/redirect-test</code></strong> 경로로 요청을 보냅니다.<br>
+                서버는 이 요청에 대해 <code>200 OK</code> 대신 <strong>HTTP 301 (Moved Permanently)</strong> 상태 코드를 응답하도록 설정되어 있습니다. (서버 설정 필요)
+            </p>
+            <a href="/redirect-test" class="button">
+                리다이렉트 테스트 실행하기
+            </a>
+            <p class="small-text">
+                <strong>[분석 포인트]</strong><br>
+                1. 클라이언트가 <code>/redirect-test</code> 요청.<br>
+                2. 서버가 <code>301 Moved Permanently</code> + <code>Location: /success</code> 헤더 응답.<br>
+                3. 클라이언트가 <code>/success</code>로 재요청.
+            </p>
+        </div>
+        
+        <div class="card">
+            <h2>3. Local DNS - UDP</h2>
+            <p>
+                이 웹 서버에 도메인(예: <code>network.local</code>)으로 접속을 시도하면, 브라우저는 먼저 로컬 DNS 서버에 <strong>UDP 53</strong>번 포트로 IP 주소를 질의합니다.
+            </p>
+            <p>
+                Wireshark에서 <code>dns</code> 필터로 <strong>DNS Query</strong>와 <strong>Response</strong> 패킷을 확인하세요.
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>
