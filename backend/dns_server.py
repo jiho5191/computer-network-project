@@ -5,7 +5,7 @@ from scapy.all import DNS, DNSQR, DNSRR
 HOST = '0.0.0.0'
 PORT = 53
 MY_DOMAIN = "network.local."
-MY_IP = "172.30.1.41"
+MY_IP = [본인 서버 IP 주소]
 
 def run_server():
     # 1. 표준 UDP 소켓 생성
